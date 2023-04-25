@@ -11,7 +11,7 @@ import (
 const dbPath = "/data/taimekalender.db?_foreign_keys=on"
 const tablesPath = "/data/tables.sql"
 
-var db *sql.DB
+var DB *sql.DB
 
 func ConnectDB() {
 	wd, err := os.Getwd()
@@ -19,17 +19,17 @@ func ConnectDB() {
 		log.Fatalf("Error getting working directory: %v", err)
 	}
 
-	db, err = sql.Open("sqlite3", wd+dbPath)
+	DB, err = sql.Open("sqlite3", wd+dbPath)
 	if err != nil {
 		log.Fatalf("Error opening database: %v", err)
 	}
 
-	err = CreateDBTables(db, wd+tablesPath)
+	err = CreateDBTables(DB, wd+tablesPath)
 	if err != nil {
 		log.Fatalf("Error creating database tables: %v", err)
 	}
 
-	defer db.Close()
+	defer DB.Close()
 
 	log.Println("Database connection established")
 }

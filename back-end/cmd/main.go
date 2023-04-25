@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/oskarpedosk/taimekalender/back-end/driver"
 	"log"
 	"net/http"
+	"taimekalender/back-end/driver"
 )
 
 func main() {

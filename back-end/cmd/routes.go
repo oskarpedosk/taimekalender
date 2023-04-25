@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"taimekalender/back-end/handlers"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -11,11 +12,8 @@ func routes() http.Handler {
 	mux := chi.NewRouter()
 
 	mux.Use(middleware.Recoverer)
-	mux.Get("/media/*", func(w http.ResponseWriter, r *http.Request) {
-		http.StripPrefix("/media/", http.FileServer(http.Dir("./media"))).ServeHTTP(w, r)
-	})
-
-	mux.Get("/", Home)
+	mux.Get("/rooms", handlers.GetRooms)
+	mux.Get("/plants/{roomID}", handlers.GetPlants)
 
 	handler := enableCORS(mux)
 	return handler

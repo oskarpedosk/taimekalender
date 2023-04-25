@@ -3,6 +3,9 @@ package repository
 import (
 	"database/sql"
 	"log"
+	"taimekalender/back-end/driver"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func HashPassword(password string) (string, error) {
@@ -17,7 +20,7 @@ func CheckPasswordHash(password, hash string) bool {
 
 func Authenticate(email, password string) bool {
 	var dbPassword string
-	err := database.QueryRow("SELECT password FROM users WHERE email = ?", email).Scan(&dbPassword)
+	err := driver.DB.QueryRow("SELECT password FROM users WHERE email = ?", email).Scan(&dbPassword)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return false
