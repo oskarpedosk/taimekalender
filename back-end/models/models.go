@@ -3,22 +3,27 @@ package models
 import "time"
 
 type User struct {
-	ID              int       `json:"id"`
-	Email           string    `json:"email"`
-	Password        string    `json:"password"`
-	PasswordConfirm string    `json:"passwordConfirm"`
-	FirstName       string    `json:"firstName"`
-	LastName        string    `json:"lastName"`
-	DateOfBirth     time.Time `json:"dateOfBirth"`
-	Image           string    `json:"image"`
-	Nickname        string    `json:"nickname"`
-	CreatedAt       time.Time `json:"createdAt"`
-	UpdatedAt       time.Time `json:"updatedAt"`
-	UUID            string    `json:"uuid"`
+	ID       int    `json:"id"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	UUID     string `json:"uuid"`
 }
 
 type Room struct {
+	ID    int    `json:"id"`
+	Name  string `json:"name"`
+	Index string `json:"index"`
 }
 
 type Plant struct {
+	ID                  int       `json:"id"`
+	RoomID              int       `json:"room_id"`
+	Name                string    `json:"name"`
+	Description         string    `json:"description"`
+	Index               string    `json:"index"`
+	Watered             time.Time `json:"watered"`
+	WateringInterval    int       `json:"watering_interval"`
+	Fertilized          time.Time `json:"fertilized"`
+	FertilizingInterval int       `json:"fertilizing_interval"`
+	Transplanting       string    `json:"transplanting"`
 }
