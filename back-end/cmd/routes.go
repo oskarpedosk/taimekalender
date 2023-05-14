@@ -12,8 +12,22 @@ func routes() http.Handler {
 	mux := chi.NewRouter()
 
 	mux.Use(middleware.Recoverer)
+
+	// Authentication
+	mux.Post("/login", handlers.Login)
+	mux.Post("/logout", handlers.Logout)
+
+	// Rooms
 	mux.Get("/rooms", handlers.GetRooms)
+	mux.Post("/rooms", handlers.AddRoom)
+	mux.Put("/rooms", handlers.UpdateRoom)
+	mux.Delete("/rooms", handlers.DeleteRoom)
+
+	// Plants
 	mux.Get("/plants/{roomID}", handlers.GetPlants)
+	mux.Post("/plants", handlers.AddPlant)
+	mux.Put("/plants", handlers.UpdatePlant)
+	mux.Delete("/plants", handlers.DeletePlant)
 
 	handler := enableCORS(mux)
 	return handler

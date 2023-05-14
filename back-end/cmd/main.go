@@ -7,7 +7,10 @@ import (
 )
 
 func main() {
-	driver.ConnectDB()
+	err := driver.ConnectDB()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	log.Println("Server started at: http://localhost:8080/")
 	log.Fatal(http.ListenAndServe(":8080", routes()))

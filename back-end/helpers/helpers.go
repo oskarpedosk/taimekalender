@@ -1,4 +1,4 @@
-package main
+package helpers
 
 import (
 	"encoding/json"
@@ -13,7 +13,7 @@ type JSONResponse struct {
 	Data    interface{} `json:"data"`
 }
 
-func writeJson(w http.ResponseWriter, status int, data interface{}, headers ...http.Header) error {
+func WriteJson(w http.ResponseWriter, status int, data interface{}, headers ...http.Header) error {
 	out, err := json.Marshal(data)
 	if err != nil {
 		return err
@@ -35,7 +35,7 @@ func writeJson(w http.ResponseWriter, status int, data interface{}, headers ...h
 	return nil
 }
 
-func readJson(w http.ResponseWriter, r *http.Request, data interface{}) error {
+func ReadJson(w http.ResponseWriter, r *http.Request, data interface{}) error {
 	maxBytes := 1024 * 1024
 
 	r.Body = http.MaxBytesReader(w, r.Body, int64(maxBytes))
@@ -55,7 +55,7 @@ func readJson(w http.ResponseWriter, r *http.Request, data interface{}) error {
 	return nil
 }
 
-func errorJson(w http.ResponseWriter, err error, status ...int) error {
+func ErrorJson(w http.ResponseWriter, err error, status ...int) error {
 	statusCode := http.StatusBadRequest
 
 	if len(status) > 0 {
@@ -67,5 +67,5 @@ func errorJson(w http.ResponseWriter, err error, status ...int) error {
 		Message: err.Error(),
 	}
 
-	return writeJson(w, statusCode, payload, nil)
+	return WriteJson(w, statusCode, payload, nil)
 }
