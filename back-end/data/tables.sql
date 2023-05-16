@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS "plants" (
     "watering_interval" INTEGER NOT NULL DEFAULT 7,
     "watered" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "fertilizing_interval" INTEGER NOT NULL DEFAULT 60,
-    "transplanting" TEXT NOT NULL DEFAULT "",
     "fertilized" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "transplanting" TEXT NOT NULL DEFAULT "",
     "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (room_id) REFERENCES rooms (id) ON DELETE CASCADE
@@ -34,17 +34,17 @@ CREATE TABLE IF NOT EXISTS "sessions" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "userId" INTEGER NOT NULL,
     "uuid" TEXT NOT NULL,
-    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (userId) REFERENCES users (id) ON DELETE CASCADE
 );
 
 -- Users
 
-INSERT INTO users (email, password)
-SELECT 'john@test.ee', '$2y$10$Vozj.mVrkY3c0i4Zf3Z6VOaQVJ0qiZq20AOlBsuKiCRTNAUdNIcPO'
+INSERT INTO users (username, password)
+SELECT 'km', '$2y$10$Vozj.mVrkY3c0i4Zf3Z6VOaQVJ0qiZq20AOlBsuKiCRTNAUdNIcPO'
 WHERE NOT EXISTS
-    (SELECT 1 FROM users WHERE email = 'john@test.ee');
+    (SELECT 1 FROM users WHERE username = 'km');
 
 -- Rooms
 
@@ -71,6 +71,6 @@ WHERE NOT EXISTS
     (SELECT 1 FROM plants WHERE name = 'palm');
 
 INSERT INTO plants (room_id, name, description, "index")
-SELECT 2, 'muru', "väike muru", 0
+SELECT 2, 'muru', "väike muru", 2
 WHERE NOT EXISTS
     (SELECT 1 FROM plants WHERE name = 'muru');

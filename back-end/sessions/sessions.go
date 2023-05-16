@@ -6,16 +6,18 @@ import (
 	"github.com/gofrs/uuid"
 )
 
-func Set(id int) (string, error) {
+func Set(userID int) (string, error) {
 	sessionID, _ := uuid.NewV4()
-	_, err := driver.DB.Exec("DELETE FROM sessions WHERE userId = ?", id)
+	_, err := driver.DB.Exec("DELETE FROM sessions WHERE userId = ?", userID)
 	if err != nil {
 		return "", err
 	}
-	_, err = driver.DB.Exec("INSERT INTO sessions (uuid, userId) VALUES (?, ?) ", sessionID.String(), id)
+
+	_, err = driver.DB.Exec("INSERT INTO sessions (uuid, userId) VALUES (?, ?) ", sessionID.String(), userID)
 	if err != nil {
 		return "", err
 	}
+
 	return sessionID.String(), nil
 }
 
@@ -24,5 +26,6 @@ func Remove(uuid string) error {
 	if err != nil {
 		return err
 	}
+
 	return nil
 }

@@ -14,6 +14,7 @@ func routes() http.Handler {
 	mux.Use(middleware.Recoverer)
 
 	// Authentication
+	mux.Get("/login", handlers.Authenticate)
 	mux.Post("/login", handlers.Login)
 	mux.Post("/logout", handlers.Logout)
 
