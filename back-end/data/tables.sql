@@ -60,10 +60,10 @@ WHERE NOT EXISTS
 
 -- Plants
 
-INSERT INTO plants (room_id, name, description, "index")
-SELECT 1, 'kaktus', "tore kaktus", 0
+INSERT INTO plants (room_id, name, description, "index", watered, fertilized)
+SELECT 1, 'Euphorbia Trigona', "tore kaktus", 0, "2023-05-15 00:00:00 +0000 UTC", "2023-05-01 00:00:00 +0000 UTC"
 WHERE NOT EXISTS
-    (SELECT 1 FROM plants WHERE name = 'kaktus');
+    (SELECT 1 FROM plants WHERE name = 'Euphorbia Trigona');
 
 INSERT INTO plants (room_id, name, description, "index")
 SELECT 1, 'palm', "tore palm", 1

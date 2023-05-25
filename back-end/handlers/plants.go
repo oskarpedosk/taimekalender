@@ -51,9 +51,27 @@ func AddPlant(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdatePlant(w http.ResponseWriter, r *http.Request) {
+	var plant models.Plant
+	_ = helpers.ReadJson(w, r, &plant)
 
+	plant, err := repository.UpdatePlant(plant)
+	if err != nil {
+		_ = helpers.ErrorJson(w, fmt.Errorf("cannot update plant %v", err), http.StatusBadRequest)
+		return
+	}
+
+	_ = helpers.WriteJson(w, http.StatusOK, plant, nil)
 }
 
 func DeletePlant(w http.ResponseWriter, r *http.Request) {
+	var plant models.Plant
+	_ = helpers.ReadJson(w, r, &plant)
 
+	plant, err := repository.DeletePlant(plant)
+	if err != nil {
+		_ = helpers.ErrorJson(w, fmt.Errorf("cannot delete plant %v", err), http.StatusBadRequest)
+		return
+	}
+
+	_ = helpers.WriteJson(w, http.StatusOK, plant, nil)
 }

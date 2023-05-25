@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"log"
 	"taimekalender/back-end/driver"
 	"taimekalender/back-end/models"
+	"time"
 )
 
 func GetPlants() ([]models.Plant, error) {
@@ -97,7 +97,6 @@ func GetLastPlantIndex() (int, error) {
 }
 
 func AddPlant(plant models.Plant) (models.Plant, error) {
-	log.Println(plant)
 	index, err := GetLastPlantIndex()
 	if err != nil {
 		return plant, err
@@ -119,6 +118,38 @@ func AddPlant(plant models.Plant) (models.Plant, error) {
 
 	plant.ID = int(plantID)
 	plant.Index = index + 1
+
+	return plant, nil
+}
+
+func UpdatePlant(plant models.Plant) (models.Plant, error) {
+	_, err := driver.DB.Exec(`
+		UPDATE 
+			plants
+		SET 
+			room_id = ?, name = ?, description = ?, watering_interval = ?, watered = ?, fertilizing_interval = ?, fertilized = ?, transplanting = ?, updated_at = ?
+		WHERE
+			id = ?
+	`, plant.RoomID, plant.Name, plant.Description, plant.WateringInterval, plant.Watered, plant.FertilizingInterval, plant.Fertilized, plant.Transplanting, time.Now(), plant.ID)
+
+	if err != nil {
+		return plant, err
+	}
+
+	return plant, nil
+}
+
+func DeletePlant(plant models.Plant) (models.Plant, error) {
+	_, err := driver.DB.Exec(`
+		DELETE FROM 
+			plants
+		WHERE
+			id = ?
+	`, plant.ID)
+
+	if err != nil {
+		return plant, err
+	}
 
 	return plant, nil
 }
